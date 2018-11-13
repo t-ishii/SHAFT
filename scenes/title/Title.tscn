@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://scenes/title/title.gd" type="Script" id=1]
+[ext_resource path="res://scenes/title/Title.gd" type="Script" id=1]
 
 [node name="Title" type="Node2D"]
 script = ExtResource( 1 )
@@ -31,4 +31,3 @@ align = 1
 _sections_unfolded = [ "Script" ]
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Button" to="Button" method="_on_Button_pressed"]

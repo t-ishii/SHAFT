@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/items.tres" type="TileSet" id=1]
+
+[node name="Bar" type="KinematicBody2D"]
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+motion/sync_to_physics = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 1, 1 )
+build_mode = 0
+polygon = PoolVector2Array( 0, 0, 0, 25, 200, 25, 200, 0 )
+
+[node name="TileMap" type="TileMap" parent="."]
+scale = Vector2( 1, 1 )
+mode = 0
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 50, 25 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0 )
+_sections_unfolded = [ "Cell" ]
+
