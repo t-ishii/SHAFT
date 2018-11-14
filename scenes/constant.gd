@@ -7,5 +7,7 @@ const SCREEN = {
 
 const WALL_DEPTH = 50
 
-const BAR_COUNT = 1
+const BAR_COUNT = 10
 const BAR_WIDTH = 200
+const BAR_POP_SPAN = 3 # 3 second
+const BAR_DEPTH = 25

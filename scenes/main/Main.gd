@@ -1,10 +1,10 @@
 extends Node2D
 
-var Constant = preload('res://scenes/constant.gd')
-var Bar = preload('res://assets/Bar.tscn')
+const Constant = preload('res://scenes/constant.gd')
+const Bar = preload('res://scenes/Bar.tscn')
 
-var bar_count = 0
-var bar = Bar.instance()
+var span = Constant.BAR_POP_SPAN
+var bars = []
 
 func get_start_pos():
     rand_seed(OS.get_ticks_msec())
@@ -18,10 +18,26 @@ func get_start_pos():
     if w > Constant.SCREEN.WIDTH - Constant.WALL_DEPTH - Constant.BAR_WIDTH:
         w = Constant.SCREEN.WIDTH - Constant.WALL_DEPTH - Constant.BAR_WIDTH
 
-    return Vector2(w, h - 50)
+    return Vector2(w, h)
 
-func _physics_process(delta):
-    if (bar_count < Constant.BAR_COUNT):
-        bar_count += 1
+func pop_bar(delta):
+
+    span -= delta
+
+    if bars.size() == 0 || span < 0 && bars.size() < Constant.BAR_COUNT:
+        var bar = Bar.instance()
+        bars.append(bar)
         bar.position = get_start_pos()
         get_parent().add_child(bar)
+        span = Constant.BAR_POP_SPAN
+        
+func move_bar(delta):
+    for bar in bars:
+        bar.position.y -= 1
+        if bar.position.y < -Constant.BAR_DEPTH:
+            get_parent().remove_child(bar)
+            bars.remove(bars.find(bar))
+
+func _physics_process(delta):
+    pop_bar(delta)
+    move_bar(delta)
