@@ -12,4 +12,17 @@ const BAR_WIDTH = 200
 const BAR_POP_SPAN = 3 # 3 second
 const BAR_DEPTH = 25
 
-const GRAVITY = 1.0
+const GRAVITY = 500.0
+
+const PLAYER = {
+    'SPEED': {
+        'STOP': 1300,
+        'FORCE': 600,
+        'MIN': 10,
+        'MAX': 200
+    },
+    'JUMP': {
+        'MAX_TIME': 0.2,
+        'SPEED': 300
+    }
+}
