@@ -11,3 +11,5 @@ const BAR_COUNT = 10
 const BAR_WIDTH = 200
 const BAR_POP_SPAN = 3 # 3 second
 const BAR_DEPTH = 25
+
+const GRAVITY = 1.0
