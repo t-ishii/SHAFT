@@ -2,7 +2,6 @@ extends Node2D
 
 const Constant = preload('res://scenes/constant.gd')
 const Bar = preload('res://scenes/Bar.tscn')
-const Player = preload('res://scenes/Player.tscn')
 
 var span = Constant.BAR_POP_SPAN
 var bars = []
@@ -42,11 +41,11 @@ func move_bar(delta):
 func _physics_process(delta):
     pop_bar(delta)
     move_bar(delta)
+    
+    if $Player.position.y > Constant.SCREEN.HEIGHT:
+        $Dead.position = Vector2($Player.position.x, Constant.SCREEN.HEIGHT)
+        $Dead.emitting = true
+        get_parent().remove_child($Player)
 
 func _ready():
-    var player = Player.instance()
-    player.position = Vector2(
-        Constant.SCREEN.WIDTH / 2,
-        30
-    )
-    get_parent().add_child(player)
+    $Player.position = Vector2(Constant.SCREEN.WIDTH / 2, Constant.SCREEN.HEIGHT / 2)

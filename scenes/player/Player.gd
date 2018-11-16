@@ -47,6 +47,6 @@ func _physics_process(delta):
     if on_air_time < Constant.PLAYER.JUMP.MAX_TIME and pressed_j and not prev_jump_pressed and not jumping:
         velocity.y = -Constant.PLAYER.JUMP.SPEED
         jumping = true
-    
+
     on_air_time += delta
     prev_jump_pressed = pressed_j
