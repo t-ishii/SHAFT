@@ -28,24 +28,31 @@ func pop_bar(delta):
         var bar = Bar.instance()
         bars.append(bar)
         bar.position = get_start_pos()
-        get_parent().add_child(bar)
+        add_child(bar)
         span = Constant.BAR_POP_SPAN
         
 func move_bar(delta):
     for bar in bars:
         bar.position.y -= 1
         if bar.position.y < -Constant.BAR_DEPTH:
-            get_parent().remove_child(bar)
+            remove_child(bar)
             bars.remove(bars.find(bar))
+
+func dead():
+    $Dead.position = Vector2($Player.position.x, Constant.SCREEN.HEIGHT)
+    $Dead.emitting = true
+    $Player.queue_free()
 
 func _physics_process(delta):
     pop_bar(delta)
     move_bar(delta)
     
-    if $Player.position.y > Constant.SCREEN.HEIGHT:
-        $Dead.position = Vector2($Player.position.x, Constant.SCREEN.HEIGHT)
-        $Dead.emitting = true
-        get_parent().remove_child($Player)
+    if has_node('Player') and $Player.position.y > Constant.SCREEN.HEIGHT:
+        dead()
+        yield(get_tree().create_timer(5.0), 'timeout')
+        for children in get_children():
+            children.queue_free()
+        get_tree().change_scene('res://scenes/result/Result.tscn')
 
 func _ready():
     $Player.position = Vector2(Constant.SCREEN.WIDTH / 2, Constant.SCREEN.HEIGHT / 2)
