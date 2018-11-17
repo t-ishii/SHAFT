@@ -50,8 +50,6 @@ func _physics_process(delta):
     if has_node('Player') and $Player.position.y > Constant.SCREEN.HEIGHT:
         dead()
         yield(get_tree().create_timer(5.0), 'timeout')
-        for children in get_children():
-            children.queue_free()
         get_tree().change_scene('res://scenes/result/Result.tscn')
 
 func _ready():
