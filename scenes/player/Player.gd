@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-const Constant = preload("res://scenes/constant.gd")
-
 var on_air_time = 100
 var velocity = Vector2()
 var jumping = false

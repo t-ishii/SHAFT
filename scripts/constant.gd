@@ -1,4 +1,7 @@
+extends Node
+
 const MAIN_SCENE = 'res://scenes/main/Main.tscn'
+const TITLE_SCENE = 'res://scenes/title/Title.tscn'
 
 const SCREEN = {
     'WIDTH': 700,

@@ -1,9 +1,8 @@
 extends Node2D
 
-const Constant = preload('res://scenes/constant.gd')
 const Bar = preload('res://scenes/Bar.tscn')
 
-var span = Constant.BAR_POP_SPAN
+var span = 0
 var bars = []
 
 func get_start_pos():
@@ -21,16 +20,17 @@ func get_start_pos():
     return Vector2(w, h)
 
 func pop_bar(delta):
+    span += delta
 
-    span -= delta
-
-    if bars.size() == 0 || span < 0 && bars.size() < Constant.BAR_COUNT:
+    if bars.size() == 0 || span > Constant.BAR_POP_SPAN && bars.size() < Constant.BAR_COUNT:
         var bar = Bar.instance()
         bars.append(bar)
         bar.position = get_start_pos()
         add_child(bar)
-        span = Constant.BAR_POP_SPAN
-        
+        span = 0
+        if has_node('Player'):
+            Status.score += 1
+
 func move_bar(delta):
     for bar in bars:
         bar.position.y -= 1
@@ -39,18 +39,20 @@ func move_bar(delta):
             bars.remove(bars.find(bar))
 
 func dead():
-    $Dead.position = Vector2($Player.position.x, Constant.SCREEN.HEIGHT)
+    $Dead.position = Vector2($Player.position.x, $Player.position.y)
     $Dead.emitting = true
     $Player.queue_free()
 
 func _physics_process(delta):
     pop_bar(delta)
     move_bar(delta)
-    
-    if has_node('Player') and $Player.position.y > Constant.SCREEN.HEIGHT:
-        dead()
-        yield(get_tree().create_timer(5.0), 'timeout')
-        get_tree().change_scene('res://scenes/result/Result.tscn')
+
+    if has_node('Player'):
+        if $Player.position.y > Constant.SCREEN.HEIGHT || $Player.position.y <= Constant.WALL_DEPTH:
+            dead()
+            yield(get_tree().create_timer(5.0), 'timeout')
+            get_tree().change_scene('res://scenes/result/Result.tscn')
 
 func _ready():
+    Status.score = 0
     $Player.position = Vector2(Constant.SCREEN.WIDTH / 2, Constant.SCREEN.HEIGHT / 2)

@@ -19,6 +19,11 @@ config/name="SHAFT"
 run/main_scene="res://scenes/title/Title.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Constant="*res://scripts/constant.gd"
+Status="*res://scripts/status.gd"
+
 [display]
 
 window/size/width=700
@@ -46,4 +51,3 @@ jump={
 [rendering]
 
 environment/default_clear_color=Color( 0, 0, 0, 1 )
-environment/default_environment="res://default_env.tres"
