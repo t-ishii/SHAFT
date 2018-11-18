@@ -20,6 +20,7 @@ func get_start_pos():
     return Vector2(w, h)
 
 func pop_bar(delta):
+
     span += delta
 
     if bars.size() == 0 || span > Constant.BAR_POP_SPAN && bars.size() < Constant.BAR_COUNT:
@@ -30,6 +31,7 @@ func pop_bar(delta):
         span = 0
         if has_node('Player'):
             Status.score += 1
+            setScore(Status.score)
 
 func move_bar(delta):
     for bar in bars:
@@ -53,6 +55,10 @@ func _physics_process(delta):
             yield(get_tree().create_timer(5.0), 'timeout')
             get_tree().change_scene('res://scenes/result/Result.tscn')
 
+func setScore(score):
+    $Score.text = 'Score: ' + str(score)
+
 func _ready():
     Status.score = 0
+    setScore(Status.score)
     $Player.position = Vector2(Constant.SCREEN.WIDTH / 2, Constant.SCREEN.HEIGHT / 2)
