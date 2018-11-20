@@ -2,6 +2,9 @@ extends Node2D
 
 const Bar = preload('res://scenes/Bar.tscn')
 
+export (int) var bar_speed = 1
+export (int) var bar_accel_speed = 2
+
 var span = 0
 var bars = []
 
@@ -21,9 +24,10 @@ func get_start_pos():
 
 func pop_bar(delta):
 
+    var bar_span = rand_range(1, Constant.BAR_POP_MAX_SPAN)
     span += delta
 
-    if bars.size() == 0 || span > Constant.BAR_POP_SPAN && bars.size() < Constant.BAR_COUNT:
+    if bars.size() == 0 || span > bar_span && bars.size() < Constant.BAR_COUNT:
         var bar = Bar.instance()
         bars.append(bar)
         bar.position = get_start_pos()
@@ -33,9 +37,14 @@ func pop_bar(delta):
             Status.score += 1
             setScore(Status.score)
 
+        if bar_speed < Constant.BAR_MAX_SPEED:
+            bar_speed += (delta * bar_accel_speed)
+        if bar_speed > Constant.BAR_MAX_SPEED:
+            bar_speed = Constant.BAR_MAX_SPEED
+
 func move_bar(delta):
     for bar in bars:
-        bar.position.y -= 1
+        bar.position.y -= bar_speed
         if bar.position.y < -Constant.BAR_DEPTH:
             remove_child(bar)
             bars.remove(bars.find(bar))

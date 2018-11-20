@@ -12,8 +12,9 @@ const WALL_DEPTH = 50
 
 const BAR_COUNT = 10
 const BAR_WIDTH = 200
-const BAR_POP_SPAN = 3 # 3 second
+const BAR_POP_MAX_SPAN = 5 # 5 second
 const BAR_DEPTH = 25
+const BAR_MAX_SPEED = 5
 
 const GRAVITY = 500.0
 
