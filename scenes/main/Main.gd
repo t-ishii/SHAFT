@@ -1,12 +1,24 @@
 extends Node2D
 
 const Bar = preload('res://scenes/Bar.tscn')
+const SpeedUpItem = preload('res://scenes/SpeedUpItem.tscn')
 
 export (int) var bar_speed = 1
 export (int) var bar_accel_speed = 2
 
 var span = 0
+var next_pop_span = rand_range(1, Constant.BAR_POP_MAX_SPAN)
 var bars = []
+
+func pop_item(bar):
+    var item = SpeedUpItem.instance()
+    var collide = item.get_node('CollisionShape2D').shape
+    var x = rand_range(
+        bar.position.x + collide.extents.x,
+        bar.position.x + Constant.BAR_WIDTH - collide.extents.x
+    )
+    var y = bar.position.y - collide.extents.y - 5
+    item.position = Vector2(x, y)
 
 func get_start_pos():
     rand_seed(OS.get_ticks_msec())
@@ -24,10 +36,9 @@ func get_start_pos():
 
 func pop_bar(delta):
 
-    var bar_span = rand_range(1, Constant.BAR_POP_MAX_SPAN)
     span += delta
 
-    if bars.size() == 0 || span > bar_span && bars.size() < Constant.BAR_COUNT:
+    if bars.size() == 0 || span > next_pop_span && bars.size() < Constant.BAR_COUNT:
         var bar = Bar.instance()
         bars.append(bar)
         bar.position = get_start_pos()
@@ -41,6 +52,8 @@ func pop_bar(delta):
             bar_speed += (delta * bar_accel_speed)
         if bar_speed > Constant.BAR_MAX_SPEED:
             bar_speed = Constant.BAR_MAX_SPEED
+            
+        next_pop_span = rand_range(1, Constant.BAR_POP_MAX_SPAN)
 
 func move_bar(delta):
     for bar in bars:
