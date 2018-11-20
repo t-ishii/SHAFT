@@ -5,6 +5,10 @@ var velocity = Vector2()
 var jumping = false
 var prev_jump_pressed = false
 
+var speed = 1
+
+signal get_item
+
 func _physics_process(delta):
     var force = Vector2(0, Constant.GRAVITY)
 
@@ -16,11 +20,11 @@ func _physics_process(delta):
     
     if pressed_l:
         if velocity.x <= Constant.PLAYER.SPEED.MIN and velocity.x > -Constant.PLAYER.SPEED.MAX:
-            force.x -= Constant.PLAYER.SPEED.FORCE
+            force.x -= Constant.PLAYER.SPEED.FORCE * speed
             stop = false
     elif pressed_r:
         if velocity.x >= -Constant.PLAYER.SPEED.MIN and velocity.x < Constant.PLAYER.SPEED.MAX:
-            force.x += Constant.PLAYER.SPEED.FORCE
+            force.x += Constant.PLAYER.SPEED.FORCE * speed
             stop = false
 
     if stop:
@@ -48,3 +52,9 @@ func _physics_process(delta):
 
     on_air_time += delta
     prev_jump_pressed = pressed_j
+
+func inc_speed():
+    speed += 0.1
+
+func _ready():
+    connect('get_item', self, 'inc_speed')

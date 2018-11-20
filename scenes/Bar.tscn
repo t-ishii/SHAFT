@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://assets/items.tres" type="TileSet" id=1]
+[ext_resource path="res://scenes/SpeedUpItem.tscn" type="PackedScene" id=2]
 
 [node name="Bar" type="Sprite"]
 
 [node name="TileMap" type="TileMap" parent="."]
-scale = Vector2( 1, 1 )
 mode = 0
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 50, 25 )
@@ -33,7 +33,11 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-scale = Vector2( 1, 1 )
 build_mode = 0
 polygon = PoolVector2Array( 0, 0, 0, 25, 200, 25, 200, 0 )
+
+[node name="SpeedUpItem" parent="." instance=ExtResource( 2 )]
+visible = false
+position = Vector2( 99.3921, -13.269 )
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Script", "Transform", "Visibility", "collision", "motion" ]
 

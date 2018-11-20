@@ -10,20 +10,7 @@ var span = 0
 var next_pop_span = rand_range(1, Constant.BAR_POP_MAX_SPAN)
 var bars = []
 
-func pop_item(bar):
-    var item = SpeedUpItem.instance()
-    var collide = item.get_node('CollisionShape2D').shape
-    var x = rand_range(
-        bar.position.x + collide.extents.x,
-        bar.position.x + Constant.BAR_WIDTH - collide.extents.x
-    )
-    var y = bar.position.y - collide.extents.y - 5
-    item.position = Vector2(x, y)
-
 func get_start_pos():
-    rand_seed(OS.get_ticks_msec())
-    randomize()
-
     var w = randi() % Constant.SCREEN.WIDTH
     var h = Constant.SCREEN.HEIGHT
 
@@ -39,14 +26,22 @@ func pop_bar(delta):
     span += delta
 
     if bars.size() == 0 || span > next_pop_span && bars.size() < Constant.BAR_COUNT:
-        var bar = Bar.instance()
-        bars.append(bar)
-        bar.position = get_start_pos()
-        add_child(bar)
+
         span = 0
+
+        var bar = Bar.instance()
+        var item = bar.get_node('SpeedUpItem')
+        bar.position = get_start_pos()
+        bars.append(bar)
+
+        add_child(bar)
+
         if has_node('Player'):
             Status.score += 1
             setScore(Status.score)
+        
+        if randi() % 5 == 1:
+            item.visible = true
 
         if bar_speed < Constant.BAR_MAX_SPEED:
             bar_speed += (delta * bar_accel_speed)
@@ -81,6 +76,8 @@ func setScore(score):
     $Score.text = 'Score: ' + str(score)
 
 func _ready():
+    rand_seed(OS.get_ticks_msec())
+    randomize()
     Status.score = 0
     setScore(Status.score)
     $Player.position = Vector2(Constant.SCREEN.WIDTH / 2, Constant.SCREEN.HEIGHT / 2)
