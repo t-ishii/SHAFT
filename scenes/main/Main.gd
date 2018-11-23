@@ -62,6 +62,10 @@ func dead():
     $Dead.emitting = true
     $Player.queue_free()
 
+func to_result():
+    yield(get_tree().create_timer(5.0), 'timeout')
+    get_tree().change_scene('res://scenes/result/Result.tscn')
+
 func _physics_process(delta):
     pop_bar(delta)
     move_bar(delta)
@@ -69,8 +73,7 @@ func _physics_process(delta):
     if has_node('Player'):
         if $Player.position.y > Constant.SCREEN.HEIGHT || $Player.position.y <= Constant.WALL_DEPTH:
             dead()
-            yield(get_tree().create_timer(5.0), 'timeout')
-            get_tree().change_scene('res://scenes/result/Result.tscn')
+            to_result()
 
 func setScore(score):
     $Score.text = 'Score: ' + str(score)
