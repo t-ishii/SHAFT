@@ -1,4 +1,4 @@
-extends Node2D
+extends CanvasLayer
 
 func _on_Retry_pressed():
     get_tree().change_scene(Constant.MAIN_SCENE)
