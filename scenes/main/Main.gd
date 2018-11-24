@@ -83,4 +83,4 @@ func _ready():
     randomize()
     Status.score = 0
     setScore(Status.score)
-    $Player.position = Vector2(Constant.SCREEN.WIDTH / 2, Constant.SCREEN.HEIGHT / 2)
+    $Player.position = $Position2D.position

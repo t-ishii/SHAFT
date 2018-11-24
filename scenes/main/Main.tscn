@@ -87,3 +87,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 350, 100 )
+_sections_unfolded = [ "Transform" ]
+
