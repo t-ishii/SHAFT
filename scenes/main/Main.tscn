@@ -91,3 +91,10 @@ _sections_unfolded = [ "custom_fonts" ]
 position = Vector2( 350, 100 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="ResultTimer" type="Timer" parent="."]
+process_mode = 1
+wait_time = 3.0
+one_shot = false
+autostart = false
+
+[connection signal="timeout" from="ResultTimer" to="." method="to_result"]
